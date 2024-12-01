@@ -1,70 +1,190 @@
-# Getting Started with Create React App
+# Product Listing Application - README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is a React-based application that allows users to log in, view products, and browse products based on their purchase history. The application loads user, product, and purchase history data from CSV files and displays personalized product listings. The products are sorted into non-purchased and purchased categories, and shown in alphabetical order.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User Authentication**: Users can log in with their credentials from a CSV file.
+- **Personalized Shopping Experience**: The product list changes based on the user’s purchase history.
+- **Product Sorting**: Products are displayed in a logical order: non-purchased products first, followed by purchased products, both alphabetically sorted by product name.
+- **Dynamic Content**: The app reads and parses CSV data asynchronously to manage user information, product data, and purchase history.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: React.js (Functional components, Hooks)
+- **Routing**: React Router v6
+- **CSV Parsing**: PapaParse library
+- **State Management**: React `useState` and `useEffect`
+- **Styling**: Basic CSS for layout and styling
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js (v14 or later)
+- npm (Node Package Manager)
 
-### `npm run eject`
+### Steps to Run the Application Locally
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the repository**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   git clone https://github.com/gokulakrishnan2327/thrd_clothing.git
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Navigate to the project folder**:
 
-## Learn More
+   ```bash
+   cd product-listing-app
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Install the required dependencies**:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   npm install
+   ```
 
-### Code Splitting
+4. **Run the development server**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   npm start
+   ```
 
-### Analyzing the Bundle Size
+   The application will be accessible at `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+product-listing-app/
+├── public/
+│   ├── index.html
+│   └── ...
+├── src/
+│   ├── assets/
+│   │   ├── users.csv
+│   │   ├── products.csv
+│   │   └── purchase_history.csv
+│   ├── components/
+│   │   ├── LoginForm.js
+│   │   ├── ProductPage.js
+│   │   └── ...
+│   ├── utils/
+│   │   └── csvParser.js
+│   ├── App.js
+│   ├── index.js
+│   ├── styles/
+│   │   └── App.css
+│   └── ...
+└── package.json
+```
 
-### Advanced Configuration
+### Key Files:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **App.js**: Main component that handles login logic, routes, and product listing.
+- **LoginForm.js**: Component for displaying the login form and handling user login.
+- **ProductPage.js**: Displays products based on purchase history for the logged-in user.
+- **csvParser.js**: Utility function to parse CSV files using PapaParse.
+- **users.csv**: CSV file containing user credentials.
+- **products.csv**: CSV file with product details (name, category, price, etc.).
+- **purchase_history.csv**: CSV file containing user purchase history (product IDs).
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## How It Works
 
-### `npm run build` fails to minify
+### 1. **Login Process**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   - The user enters their username and password in the login form.
+   - The `handleLogin` function in **App.js** checks if the provided credentials match any user from the `users.csv` file.
+   - If the login is successful, the user is redirected to the product listing page; otherwise, an error message is shown.
+
+### 2. **Product Listing**
+
+   - Once logged in, the user is redirected to the product page.
+   - The `getProductList` function sorts products based on the user's purchase history:
+     - **Non-purchased products** are displayed first.
+     - **Purchased products** appear after the non-purchased ones.
+   - Both product groups are sorted alphabetically by product name.
+
+### 3. **CSV Parsing**
+
+   - The CSV files (users, products, and purchase history) are parsed using **PapaParse** in **csvParser.js**.
+   - The data is asynchronously loaded into the state using React's `useEffect` hook, ensuring that the app always uses up-to-date data.
+
+### 4. **Product Page Layout**
+
+   - Products are displayed in a card format with:
+     - Product image
+     - Product name
+     - Product category
+     - Product price
+   - A logout button is also available to allow users to log out and return to the login page.
+
+---
+
+## User Interaction Flow
+
+1. **Login Screen**:
+   - The user enters their username and password.
+   - The login credentials are validated.
+   - Upon successful login, the user is redirected to the product page.
+
+2. **Product Page**:
+   - Once on the product page, the user can see products sorted based on their purchase history:
+     - First, products the user has not purchased.
+     - Second, products the user has already purchased.
+   - Products are sorted alphabetically by their name in both categories.
+
+3. **Logout**:
+   - The user can log out by clicking the "Logout" button on the product page.
+   - Logging out returns the user to the login page.
+
+---
+
+## Demo
+
+1. **Login with two different users**:
+   - Demonstrate logging in with two users from `users.csv`.
+   - Show the differences in product listings for each user based on their unique purchase history.
+
+2. **Invalid login attempt**:
+   - Show an example of entering incorrect credentials and receiving an error message.
+
+3. **Product Listing for each user**:
+   - Show how products are sorted and displayed differently based on purchase history.
+
+---
+
+## Optional Features to Add
+
+- **Category Filter**: Allow users to filter products by category.
+- **Price Filter**: Allow users to filter products by price range.
+- **Shopping Cart**: Add functionality for users to add products to a shopping cart and proceed to checkout.
+- **Search Bar**: Implement a search bar to allow users to quickly find products by name.
+
+---
+
+## Troubleshooting
+
+- **If the app doesn't load or there are parsing errors**:
+  - Ensure that the CSV files (`users.csv`, `products.csv`, and `purchase_history.csv`) are correctly formatted and placed in the `assets/` directory.
+  - Check the console for any specific error messages regarding the parsing of CSV data.
+
+---
+
+## Conclusion
+
+This application demonstrates a basic personalized shopping experience, using React for the front-end and PapaParse for CSV parsing. Users can log in, browse products based on their purchase history, and explore how products are sorted and displayed differently for each user. 
+
+Feel free to extend the functionality by adding new features like product filters, a shopping cart, and more!
